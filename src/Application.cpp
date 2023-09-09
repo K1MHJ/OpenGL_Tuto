@@ -5,7 +5,29 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <mach/mach.h>
+#include <signal.h>
 
+#define ASSERT(x) if (!(x)) raise(SIGKILL);
+#define GLCall(x) GLClearError();\
+  x;\
+  ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+
+static void GLClearError()
+{
+  while(glGetError() != GL_NO_ERROR);
+}
+
+static bool GLLogCall(const char* function, const char* file, int line)
+{
+  while(GLenum error = glGetError())
+  {
+    std::cout << "[OpenGL Error] (" << error << "): " << function <<
+      " " << file << ":" << line << std::endl;
+    return false;
+  }
+  return true;
+}
 struct ShaderProgramSource
 {
   std::string VertexSource;
@@ -65,7 +87,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
 }
 static int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
-  unsigned int program = glCreateProgram();
+  GLCall(unsigned int program = glCreateProgram());
   unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
   unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
@@ -152,8 +174,8 @@ int main(void)
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBindVertexArray(vao);
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+  
+    GLCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr));
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
