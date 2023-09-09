@@ -1,10 +1,13 @@
 .PHONY: all run
 CC := clang
 CXX := clang++
+LD := clang++
+# CC := gcc-13
+# CXX := g++-13
+# LD := g++-13
 AR := ar
 RANLIB :=
-LD := clang++
-CFLAGS := -g -Wall -MP -MMD -DGL_SILENCE_DEPRECATION
+CFLAGS := -g -O0 -Wall -MP -MMD -DGL_SILENCE_DEPRECATION
 CXXFLAGS := $(CFLAGS) -std=c++20
 SRCDIR := ./src
 OBJDIR := ./obj
@@ -37,7 +40,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
-dbg:
+debug : $(TARGET)
 	@echo "debug $(TARGET)"
 	lldb $(TARGET)
 
