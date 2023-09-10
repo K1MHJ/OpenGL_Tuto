@@ -20,7 +20,7 @@ FRAMEWORKS  := -framework OpenGL -framework Cocoa -framework IOKit -framework Co
 OPENGLLIB := -L/opt/homebrew/Cellar/glew/2.2.0_1/lib -L/opt/homebrew/Cellar/glfw/3.3.8/lib
 LDFLAGS     := -L/usr/lib -L/usr/local/lib $(OPENGLLIB) -lGLEW.2.2 -lglfw.3.3
 
-SRC := Application.cpp
+SRC := Application.cpp IndexBuffer.cpp VertexBuffer.cpp Renderer.cpp
 OBJS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 DEPS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.d))
 
