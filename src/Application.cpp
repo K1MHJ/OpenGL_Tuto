@@ -113,8 +113,8 @@ int main(void)
       return -1;
 
   // OpenGL Version 3.2 Core Profile を選択する
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -168,11 +168,16 @@ int main(void)
 
   ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
   const GLuint shader(CreateShader(source.VertexSource, source.FragmentSource));
-  glUseProgram(shader);
+  GLCall(glUseProgram(shader));
   
   GLCall(int location = glGetUniformLocation(shader, "u_Color"));
   ASSERT(location != -1);
   GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
+  
+  GLCall(glBindVertexArray(0));
+  GLCall(glUseProgram(0));
+  GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
   
   float r = 0.0f;
   float increment = 0.05;
@@ -181,11 +186,14 @@ int main(void)
   while (!glfwWindowShouldClose(window))
   {
     /* Render here */
-    glClear(GL_COLOR_BUFFER_BIT);
+    GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-    glBindVertexArray(vao);
-
+    GLCall(glUseProgram(shader));
     GLCall(glUniform4f(location,r, 0.3f, 0.8f, 1.0f));
+    
+    GLCall(glBindVertexArray(vao));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
     GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
     
     if(r>1.0f)
