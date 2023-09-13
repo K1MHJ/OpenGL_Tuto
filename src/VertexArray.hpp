@@ -1,9 +1,7 @@
 #pragma once
 
-#include "VertexBuffer.hpp"
-#include "VertexBufferLayout.hpp"
-
-
+class VertexBuffer;
+class VertexBufferLayout;
 class VertexArray
 {
 private:
