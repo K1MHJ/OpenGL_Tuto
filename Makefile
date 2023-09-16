@@ -12,7 +12,7 @@ CXXFLAGS := $(CFLAGS) -std=c++20
 SRCDIR := ./src
 OBJDIR := ./obj
 BINDIR := ./bin
-INCLUDE := -I/opt/homebrew/include -I/usr/include -I/usr/local/include -I./src 
+INCLUDE := -I/opt/homebrew/include/ -I/usr/include/ -I/usr/local/include/ -I./src/ -I./src/vendor/
 LIBS := -lm
 DEFINES := 
 TARGET := ./bin/App
