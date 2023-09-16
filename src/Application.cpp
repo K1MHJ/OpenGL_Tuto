@@ -78,7 +78,7 @@ int main(void)
     
     IndexBuffer ib(indices, 6);
     
-    glm::mat4 proj = glm::ortho(-4.0f, 4.0f, -3.0f, 3.0f, -1.0f, 1.0f);
+    glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
 
     Shader shader("res/shaders/Basic.shader");
     shader.Bind();
