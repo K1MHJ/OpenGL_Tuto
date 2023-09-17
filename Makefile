@@ -12,7 +12,7 @@ CXXFLAGS := $(CFLAGS) -std=c++20
 SRCDIR := ./src
 OBJDIR := ./obj
 BINDIR := ./bin
-INCLUDE := -I/opt/homebrew/include/ -I/usr/include/ -I/usr/local/include/ -I./src/ -I./src/vendor/ -I./src/vendor/imgui/
+INCLUDE := -I./src/tests/ -I/opt/homebrew/include/ -I/usr/include/ -I/usr/local/include/ -I./src/ -I./src/vendor/ -I./src/vendor/imgui/
 LIBS := -lm
 DEFINES := 
 TARGET := ./bin/App
@@ -24,7 +24,7 @@ SRC := Texture.cpp Shader.cpp Application.cpp IndexBuffer.cpp VertexBuffer.cpp R
 SRC := $(SRC) vendor/stb_image/stb_image.cpp 
 SRC := $(SRC) vendor/imgui/imgui.cpp vendor/imgui/imgui_demo.cpp vendor/imgui/imgui_draw.cpp vendor/imgui/imgui_impl_glfw.cpp vendor/imgui/imgui_tables.cpp vendor/imgui/imgui_widgets.cpp 
 SRC := $(SRC) vendor/imgui/imgui_impl_opengl3.cpp
-SRC := $(SRC) tests/TestClearColor.cpp
+SRC := $(SRC) tests/TestClearColor.cpp tests/Test.cpp
 
 OBJS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 DEPS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.d))

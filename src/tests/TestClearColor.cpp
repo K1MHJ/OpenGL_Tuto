@@ -1,4 +1,4 @@
-#include "TestClearColor.h"
+#include "TestClearColor.hpp"
 
 #include "Renderer.hpp"
 #include "imgui/imgui.h"
