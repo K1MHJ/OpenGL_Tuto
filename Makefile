@@ -24,7 +24,7 @@ SRC := Texture.cpp Shader.cpp Application.cpp IndexBuffer.cpp VertexBuffer.cpp R
 SRC := $(SRC) vendor/stb_image/stb_image.cpp 
 SRC := $(SRC) vendor/imgui/imgui.cpp vendor/imgui/imgui_demo.cpp vendor/imgui/imgui_draw.cpp vendor/imgui/imgui_impl_glfw.cpp vendor/imgui/imgui_tables.cpp vendor/imgui/imgui_widgets.cpp 
 SRC := $(SRC) vendor/imgui/imgui_impl_opengl3.cpp
-SRC := $(SRC) tests/TestTexture2D.cpp tests/TestClearColor.cpp tests/Test.cpp
+SRC := $(SRC) tests/TestInstancing.cpp tests/TestTexture2D.cpp tests/TestClearColor.cpp tests/Test.cpp
 
 OBJS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 DEPS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.d))

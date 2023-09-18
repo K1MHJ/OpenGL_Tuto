@@ -7,10 +7,12 @@ layout(location = 1) in vec2 texCoord;
 out vec2 v_TexCoord;
 
 uniform mat4 u_MVP;
+uniform vec2 offsets[100];
 
 void main()
 {
-  gl_Position = u_MVP * position;
+  vec2 offset = offsets[gl_InstanceID];
+  gl_Position = u_MVP * (position + vec4(offset, 0.0, 1.0));
   v_TexCoord = texCoord;
 }
 
@@ -27,5 +29,5 @@ uniform sampler2D u_Texture;
 void main()
 {
   vec4 texColor = texture(u_Texture, v_TexCoord);
-  color = texColor;
+  color = u_Color;
 }

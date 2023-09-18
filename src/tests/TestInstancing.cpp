@@ -1,24 +1,22 @@
-#include "TestTexture2D.hpp"
+#include "TestInstancing.hpp"
 
 #include "Renderer.hpp"
 #include "imgui/imgui.h"
-
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace test{
-  TestTexture2D::TestTexture2D()
-    : m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+  TestInstancing::TestInstancing()
+    : m_Proj(glm::ortho(0.0f, 1000.0f, 0.0f, 1000.0f, -1.0f, 1.0f)),
       m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
-      m_TranslationA(200, 200, 0), m_TranslationB(400,200,0)
-
+      m_Translation(0, 0, 0)
   {
     float positions[] = {
-      -50.0f, -50.0f, 0.0f, 0.0f, //0
-       50.0f, -50.0f, 1.0f, 0.0f, //1
-       50.0f,  50.0f, 1.0f, 1.0f, //2
-      -50.0f,  50.0f, 0.0f, 1.0f  //3
+         0.0f,   0.0f, 0.0f, 0.0f, //0
+       100.0f,   0.0f, 1.0f, 0.0f, //1
+       100.0f, 100.0f, 1.0f, 1.0f, //2
+         0.0f, 100.0f, 0.0f, 1.0f  //3
     };
     
     unsigned int indices[] = {
@@ -45,16 +43,34 @@ namespace test{
 
     m_Texture = std::make_unique<Texture>("res/textures/logo.png");
     m_Shader->SetUniform1i("u_Texture", 0);
+    
+
+    int index = 0;
+    float offset = 0.0f;
+    for(int y = 0; y < 1000; y += 100)
+    {
+        for(int x = 0; x < 1000; x += 100)
+        {
+            glm::vec2 translation;
+            translation.x = (float)x;
+            translation.y = (float)y;
+            translations[index++] = translation;
+        }
+    }
+    for(unsigned int i = 0; i < 100; i++)
+    {
+      m_Shader->SetUniform2f("offsets[" + std::to_string(i) + "]", translations[i].x, translations[i].y);
+    } 
   }
-  TestTexture2D::~TestTexture2D()
+  TestInstancing::~TestInstancing()
   {
 
   }
-  void TestTexture2D::OnUpdate(float deltaTime)
+  void TestInstancing::OnUpdate(float deltaTime)
   {
 
   }
-  void TestTexture2D::OnRender()
+  void TestInstancing::OnRender()
   {
     GLCall(glClearColor(0.0f,0.0f,0.0f,0.0f));
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
@@ -64,24 +80,22 @@ namespace test{
     m_Texture->Bind();
 
     {
-      glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationA);
+      glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation);
       glm::mat4 mvp = m_Proj * m_View * model;
       m_Shader->Bind();
       m_Shader->SetUniformMat4f("u_MVP", mvp);
-      renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
-    }
-    {
-      glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationB);
-      glm::mat4 mvp = m_Proj * m_View * model;
+
+      //renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+
       m_Shader->Bind();
-      m_Shader->SetUniformMat4f("u_MVP", mvp);
-      renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+      m_VAO->Bind();
+      m_IndexBuffer->Bind();
+      GLCall(glDrawElementsInstanced(GL_LINE_STRIP, 6, GL_UNSIGNED_INT, NULL, 100));
     }
   }
-  void TestTexture2D::OnImGuiRender()
+  void TestInstancing::OnImGuiRender()
   {
-    ImGui::SliderFloat3("Translation A", &m_TranslationA.x, 0.0f, 960.0f);
-    ImGui::SliderFloat3("Translation B", &m_TranslationB.x, 0.0f, 960.0f);
+    ImGui::SliderFloat3("Translation", &m_Translation.x, 0.0f, 1000.0f);
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
   }
 }

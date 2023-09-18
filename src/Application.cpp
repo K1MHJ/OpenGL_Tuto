@@ -26,6 +26,7 @@
 
 #include "tests/TestClearColor.hpp"
 #include "tests/TestTexture2D.hpp"
+#include "tests/TestInstancing.hpp"
 
 int main(void)
 {
@@ -37,14 +38,14 @@ int main(void)
 
   // OpenGL Version 3.2 Core Profile を選択する
   // GL 3.2 + GLSL 150
- const char* glsl_version = "#version 150";
+  const char* glsl_version = "#version 330";
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   /* Create a windowed mode window and its OpenGL context */
-  window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+  window = glfwCreateWindow(1000, 1000, "Hello World", NULL, NULL);
   if (!window)
   {
       glfwTerminate();
@@ -86,6 +87,7 @@ int main(void)
     
     testMenu->RegisterTest<test::TestClearColor>("Clear Color");
     testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
+    testMenu->RegisterTest<test::TestInstancing>("Instancing");
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
