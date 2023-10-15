@@ -3,4 +3,6 @@
 -I/usr/local/include/
 -I./src/
 -I./src/vendor/
+-I./src/Geometry/
+-I./src/tests/
 -std=c++20

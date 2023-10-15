@@ -13,6 +13,7 @@ SRCDIR := ./src
 OBJDIR := ./obj
 BINDIR := ./bin
 INCLUDE := -I./src/tests/ -I/opt/homebrew/include/ -I/usr/include/ -I/usr/local/include/ -I./src/ -I./src/vendor/ -I./src/vendor/imgui/
+INCLUDE := $(INCLUDE) -I./src/Geometry/
 LIBS := -lm
 DEFINES := 
 TARGET := ./bin/App
@@ -25,6 +26,10 @@ SRC := $(SRC) vendor/stb_image/stb_image.cpp
 SRC := $(SRC) vendor/imgui/imgui.cpp vendor/imgui/imgui_demo.cpp vendor/imgui/imgui_draw.cpp vendor/imgui/imgui_impl_glfw.cpp vendor/imgui/imgui_tables.cpp vendor/imgui/imgui_widgets.cpp 
 SRC := $(SRC) vendor/imgui/imgui_impl_opengl3.cpp
 SRC := $(SRC) tests/TestInstancing.cpp tests/TestTexture2D.cpp tests/TestClearColor.cpp tests/Test.cpp
+SRC := $(SRC) tests/TestMultiObject.cpp 
+SRC := $(SRC) PositionBuffer.cpp 
+
+# SRC := $(SRC) Geometry/Rectangle.cpp Geometry/Shape.cpp
 
 OBJS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 DEPS  := $(addprefix $(OBJDIR)/, $(SRC:.cpp=.d))

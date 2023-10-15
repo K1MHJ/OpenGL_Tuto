@@ -1,5 +1,5 @@
 #pragma once
-
+class PositionBuffer;
 class VertexBuffer;
 class VertexBufferLayout;
 class VertexArray
@@ -9,6 +9,7 @@ private:
 public:
   VertexArray();
   ~VertexArray();
+  void AddBuffer(const VertexBuffer& vb, const PositionBuffer& pb, const VertexBufferLayout& layout);
   void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
 
   void Bind() const;
