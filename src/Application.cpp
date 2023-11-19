@@ -26,8 +26,10 @@
 
 #include "tests/TestClearColor.hpp"
 #include "tests/TestTexture2D.hpp"
-#include "tests/TestInstancing.hpp"
-#include "tests/TestMultiObject.hpp"
+// #include "tests/TestInstancing.hpp"
+// #include "tests/TestMultiObject.hpp"
+#include "tests/TestTile.hpp"
+#include "tests/TestPolygon.hpp"
 
 int main(void)
 {
@@ -66,6 +68,7 @@ int main(void)
   {
     GLCall(glEnable(GL_BLEND));
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    glEnable(GL_LINE_SMOOTH);
 
     Renderer renderer;
 
@@ -88,16 +91,18 @@ int main(void)
     
     testMenu->RegisterTest<test::TestClearColor>("Clear Color");
     testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
-    testMenu->RegisterTest<test::TestInstancing>("Instancing");
-    testMenu->RegisterTest<test::TestMultiObject>("Multi");
+    // testMenu->RegisterTest<test::TestInstancing>("Instancing");
+    // testMenu->RegisterTest<test::TestMultiObject>("Multi");
+    testMenu->RegisterTest<test::TestTile>("Tile");
+    testMenu->RegisterTest<test::TestPolygon>("Polygon");
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
       /* Render here */
       GLCall(glClearColor(0.0f,0.0f,0.0f,0.0f));
-      renderer.Clear();
-      
+      GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
       // Start the Dear ImGui frame
       ImGui_ImplOpenGL3_NewFrame();
       ImGui_ImplGlfw_NewFrame();

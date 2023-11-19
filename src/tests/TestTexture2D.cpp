@@ -3,7 +3,6 @@
 #include "Renderer.hpp"
 #include "imgui/imgui.h"
 
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -15,9 +14,9 @@ namespace test{
 
   {
     float positions[] = {
-      -50.0f, -50.0f, 0.0f, 0.0f, //0
+      -50.0f, -50.0f, 0.0f, 0.0f, //2
        50.0f, -50.0f, 1.0f, 0.0f, //1
-       50.0f,  50.0f, 1.0f, 1.0f, //2
+       50.0f,  50.0f, 1.0f, 1.0f, //0
       -50.0f,  50.0f, 0.0f, 1.0f  //3
     };
     
@@ -42,13 +41,19 @@ namespace test{
     m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
     m_Shader->Bind();
     m_Shader->SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+    m_Shader->SetUniform1i("u_Texture", 0);
 
     m_Texture = std::make_unique<Texture>("res/textures/logo.png");
-    m_Shader->SetUniform1i("u_Texture", 0);
+    m_Texture->Bind();
+    //printf("%d, %d\n", m_Texture->GetWidth(), m_Texture->GetHeight());
   }
   TestTexture2D::~TestTexture2D()
   {
 
+  }
+  void TestTexture2D::OnAttach()
+  {
+    std::cout << "Texture2D" << std::endl;
   }
   void TestTexture2D::OnUpdate(float deltaTime)
   {
@@ -56,9 +61,6 @@ namespace test{
   }
   void TestTexture2D::OnRender()
   {
-    GLCall(glClearColor(0.0f,0.0f,0.0f,0.0f));
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
     Renderer renderer;
 
     m_Texture->Bind();

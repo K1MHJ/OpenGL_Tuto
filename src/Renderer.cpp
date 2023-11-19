@@ -24,6 +24,6 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& id, const Shader& 
   shader.Bind();
   va.Bind();
   id.Bind();
-  //GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-  GLCall(glDrawElementsInstanced(GL_LINE_STRIP, 6, GL_UNSIGNED_INT, NULL, 1));
+  GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+  //GLCall(glDrawElementsInstanced(GL_LINE_STRIP, 6, GL_UNSIGNED_INT, NULL, 1));
 }

@@ -1,22 +1,23 @@
 #pragma once
 
 #include "Test.hpp"
-
 #include "VertexBuffer.hpp"
 #include "VertexBufferLayout.hpp"
 #include "Texture.hpp"
 
+#include <GL/glew.h>
 
 namespace test{
-  class TestTexture2D: public Test
+  class TestTile: public Test
   {
   public:
-    TestTexture2D();
-    ~TestTexture2D();
+    TestTile();
+    ~TestTile();
 
+    void OnAttach() override;
+    void OnBuild() override;
     void OnUpdate(float deltaTime) override;
     void OnRender() override;
-    void OnAttach() override;
     void OnImGuiRender() override;
   private:
     std::unique_ptr<VertexArray> m_VAO;
@@ -26,5 +27,8 @@ namespace test{
     std::unique_ptr<Texture> m_Texture;
     glm::vec3 m_TranslationA, m_TranslationB;
     glm::mat4 m_Proj, m_View;
+    GLuint m_Framebuffer = 0;
+    GLuint m_RenderedTexture;
+    GLuint m_Depthbuffer;
   };
 }
